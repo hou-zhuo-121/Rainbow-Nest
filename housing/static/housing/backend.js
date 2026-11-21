@@ -42,6 +42,8 @@
     });
     $('#btnQ').textContent = profile ? '编辑室友偏好' : '设置室友偏好';
     $('#qState').textContent = profile ? '已从账号载入室友偏好。' : '';
+    updateProfile();
+    if(['habits','preferences'].includes(currentPage())) showPrefForm();
     if(searchState) doSearch();
   }
 
@@ -243,10 +245,11 @@
   allListings().then(rows=>{
     loadListingRows(rows, '共享房源数据库');
     $('#btnSearch').disabled = !rows.length;
-    if(!rows.length) $('#list .empty p').textContent = '数据库暂无房源。运行导入命令后刷新页面。';
+    if(!rows.length) $('#summary').textContent = '暂时没有可查询的房源。';
     renderFavorites();
+    window.dispatchEvent(new CustomEvent('housing:listings-ready', {detail:{count:rows.length}}));
   }).catch(error=>{
     $('#summary').textContent = error.message;
-    $('#list .empty p').textContent = '暂时无法读取共享房源，请确认服务已启动并刷新页面。';
+    window.dispatchEvent(new CustomEvent('housing:listings-error', {detail:{message:error.message}}));
   });
 })();

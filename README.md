@@ -20,7 +20,7 @@ python3 -m venv .venv
 
 管理房源时，先运行 `.venv/bin/python manage.py createsuperuser`，再登录 [管理后台](http://127.0.0.1:8000/admin/)。
 
-双击 `index(1).html` 仍可用内置数据离线演示。登录、共享收藏和偏好保存请通过 Django 打开的页面使用。
+双击 `index.html` 可用内置数据离线演示，第一版保存在 `第一版（原始）index.html`。登录、共享收藏和偏好保存请通过 Django 打开的页面使用。
 
 ## 团队共享数据库
 

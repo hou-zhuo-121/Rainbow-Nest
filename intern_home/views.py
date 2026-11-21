@@ -7,7 +7,7 @@ from django.views.decorators.http import require_safe
 
 @require_safe
 def home(request):
-    page = (settings.BASE_DIR / "index(1).html").read_text(encoding="utf-8")
+    page = (settings.BASE_DIR / "index.html").read_text(encoding="utf-8")
     route_state = "on" if settings.AMAP_WEB_KEY else "off"
     page = page.replace(
         '<html lang="zh-CN">',
