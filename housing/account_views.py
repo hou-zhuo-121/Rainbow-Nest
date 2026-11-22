@@ -1,5 +1,6 @@
 import json
 import re
+from urllib.parse import unquote
 
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib.auth.forms import UserCreationForm
@@ -156,10 +157,43 @@ def preferences(request):
 
 
 @never_cache
-@require_http_methods(["PUT", "DELETE"])
-def favorite(request, listing_id):
+@require_POST
+def merge_favorites(request):
+    if error := _favorite_account_error(request):
+        return error
+    try:
+        values = _json_body(request)
+    except ValueError as error:
+        return _error(str(error), 400)
+    listing_ids = values.get("listing_ids") if isinstance(values, dict) else None
+    if not isinstance(listing_ids, list) or len(listing_ids) > 200 or any(
+        not isinstance(value, str) or not value.strip() or len(value) > 80
+        for value in listing_ids
+    ):
+        return _error("收藏列表应包含至多 200 个有效房源编号。", 400)
+
+    existing_ids = Listing.objects.filter(pk__in=set(listing_ids)).order_by("pk").values_list("pk", flat=True)
+    Favorite.objects.bulk_create(
+        [Favorite(user=request.user, listing_id=listing_id) for listing_id in existing_ids],
+        ignore_conflicts=True,
+    )
+    return JsonResponse({"favorites": _favorite_ids(request.user)})
+
+
+def _favorite_account_error(request):
     if not request.user.is_authenticated:
         return _error("请先登录。", 401)
+    expected = request.headers.get("X-Favorites-Account")
+    if expected is not None and unquote(expected) != request.user.get_username():
+        return _error("当前登录账号已切换，请重试。", 409)
+    return None
+
+
+@never_cache
+@require_http_methods(["PUT", "DELETE"])
+def favorite(request, listing_id):
+    if error := _favorite_account_error(request):
+        return error
     if not Listing.objects.filter(pk=listing_id).exists():
         return _error("没有找到这套房源。", 404)
 

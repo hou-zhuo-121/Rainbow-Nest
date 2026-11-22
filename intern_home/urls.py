@@ -14,6 +14,7 @@ urlpatterns = [
     path("api/auth/login", account_views.sign_in, name="login"),
     path("api/auth/logout", account_views.sign_out, name="logout"),
     path("api/preferences", account_views.preferences, name="preferences"),
+    path("api/favorites", account_views.merge_favorites, name="merge-favorites"),
     path("api/favorites/<str:listing_id>", account_views.favorite, name="favorite"),
     path("api/commutes", commute_views.commutes, name="commutes"),
 ]

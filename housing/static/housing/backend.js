@@ -1,12 +1,17 @@
 (() => {
-  let account = {user:null, preferences:null, favorites:[], csrf_token:''};
+  let account = {user:null, preferences:null, csrf_token:''};
   let sessionRequest;
+  let favoriteRequest;
+  let authBusy = false;
+  let refreshQueued = false;
   let routeRequest;
   let canRoute = document.documentElement.dataset.amapRoutes==='on';
+  const importNotice = '之前的收藏还在等待同步，刷新页面可重试。';
 
-  async function request(path, {method='GET', body}={}){
+  async function request(path, {method='GET', body, favoriteAccount}={}){
     const headers = {Accept:'application/json'};
     if(body!==undefined) headers['Content-Type'] = 'application/json';
+    if(favoriteAccount) headers['X-Favorites-Account'] = encodeURIComponent(favoriteAccount);
     if(method!=='GET'){
       if(!account.csrf_token) await refreshSession();
       headers['X-CSRFToken'] = account.csrf_token;
@@ -22,7 +27,9 @@
     }
     const result = await response.json().catch(()=>null);
     if(!response.ok || !result){
-      throw new Error(result?.error || '后端暂时无法处理这次请求。');
+      const error = new Error(result?.error || '后端暂时无法处理这次请求。');
+      error.status = response.status;
+      throw error;
     }
     return result;
   }
@@ -49,7 +56,8 @@
 
   function setAccount(result){
     const previous = account.user;
-    account = {...result, favorites:result.favorites || []};
+    const {user, preferences, csrf_token} = result;
+    account = {user, preferences, csrf_token};
     $('#btnAccount').textContent = result.user ? '我的账号' : '登录';
     $('#accountForm').hidden = Boolean(result.user);
     $('#accountMember').hidden = !result.user;
@@ -57,113 +65,175 @@
     if(result.user?.username!==previous?.username){
       if(result.preferences || previous) setQuestionnaire(result.preferences || null);
     }
-    renderFavorites();
+    setFavoriteIds(user ? result.favorites : guestFavorites);
   }
 
   function refreshSession(){
     if(!sessionRequest){
-      sessionRequest = request('/api/session').then(setAccount).finally(()=>{ sessionRequest = null; });
+      sessionRequest = request('/api/session').then(applySession).finally(()=>{
+        sessionRequest = null;
+        finishFavoriteOperation();
+      });
+      syncHearts();
     }
     return sessionRequest;
   }
 
-  function renderFavorites(){
-    const list = $('#favoriteList');
-    list.replaceChildren();
-    $('#favoritesEmpty').hidden = account.favorites.length>0;
-    account.favorites.forEach(id=>{
-      const listing = LISTINGS.find(item=>item.key===id);
-      const entry = document.createElement('li');
-      const open = document.createElement('button');
-      open.type = 'button';
-      open.className = 'text-btn';
-      open.textContent = listing ? `${listing.area} · ${listing.roomType} · ¥${fmt(listing.rent)}/月` : id;
-      open.onclick = async ()=>{
-        try{
-          const item = buildListing((await request(`/api/listings/${encodeURIComponent(id)}`)).listing);
-          let index = LISTINGS.findIndex(listing=>listing.key===id);
-          if(index===-1) index = LISTINGS.push(item)-1;
-          else LISTINGS[index] = item;
-          closeM('maskAccount');
-          openDetail(index);
-        }catch(error){
-          $('#accountStatus').textContent = error.message;
-        }
-      };
-      entry.append(open);
-      list.append(entry);
-    });
+  function favoritesBusy(){
+    return Boolean(sessionRequest || favoriteRequest || authBusy);
   }
 
-  function showFavorite(listing){
-    const button = $('#btnFavorite');
-    const saved = account.favorites.includes(listing.key);
-    $('#favoriteTools').hidden = false;
-    $('#favoriteStatus').textContent = '';
-    button.textContent = !account.user ? '登录后可收藏' : saved ? '取消收藏' : '收藏房源';
-    button.setAttribute('aria-pressed', String(saved));
-    button.onclick = async ()=>{
+  function refreshFavorites(){
+    if(document.hidden) return;
+    if(favoritesBusy()){
+      refreshQueued = true;
+      return;
+    }
+    refreshSession().catch(()=>{});
+  }
+
+  function finishFavoriteOperation(){
+    syncHearts();
+    if(refreshQueued && !favoritesBusy()){
+      refreshQueued = false;
+      refreshFavorites();
+    }
+  }
+
+  function notifyFavoriteChange(){
+    remember('favorite-sync', Date.now());
+  }
+
+  function removeGuestFavorites(ids){
+    const remaining = new Set(guestFavorites);
+    ids.forEach(id=>remaining.delete(id));
+    storeGuestFavorites(remaining);
+  }
+
+  function removePendingFavorites(key, ids){
+    const pending = favoriteIds(recall(key, []));
+    const size = pending.size;
+    ids.forEach(id=>pending.delete(id));
+    if(pending.size!==size) remember(key, [...pending]);
+  }
+
+  async function mergeGuestFavorites(username){
+    const key = 'favorite-import.' + username;
+    const ids = [...new Set([...favoriteIds(recall(key, [])), ...guestFavorites])];
+    if(!ids.length) return;
+
+    // Keep a failed import with the account it was intended for.
+    const queued = remember(key, ids);
+    if(queued) removeGuestFavorites(ids);
+    for(let offset=0; offset<ids.length; offset+=200){
+      const batch = ids.slice(offset, offset+200);
+      const result = await request('/api/favorites', {
+        method:'POST', body:{listing_ids:batch}, favoriteAccount:username,
+      });
+      if(queued) removePendingFavorites(key, batch);
+      else removeGuestFavorites(batch);
+      setFavoriteIds(result.favorites);
+      notifyFavoriteChange();
+    }
+  }
+
+  async function applySession(result){
+    setAccount(result);
+    if(!result.user) return;
+    try{
+      await mergeGuestFavorites(result.user.username);
+      for(const selector of ['#favoriteNotice','#accountStatus']){
+        const notice = $(selector);
+        if(notice.textContent===importNotice) notice.textContent = '';
+      }
+    }catch{
+      $('#favoriteNotice').textContent = importNotice;
+      if($('#maskAccount').classList.contains('show')) $('#accountStatus').textContent = importNotice;
+    }
+  }
+
+  function toggleFavorite(id){
+    if(favoritesBusy()) return;
+    const notice = $('#favoriteNotice');
+    notice.textContent = '';
+    favoriteRequest = (async ()=>{
+      if(!account.csrf_token) await refreshSession();
       if(!account.user){
-        closeM('maskDetail');
-        openAccount();
+        toggleGuestFavorite(id);
         return;
       }
-      button.disabled = true;
-      try{
-        const response = await request(`/api/favorites/${encodeURIComponent(listing.key)}`, {
-          method:saved ? 'DELETE' : 'PUT',
-        });
-        account.favorites = response.favorites;
-        renderFavorites();
-        if(curListing?.key===listing.key) showFavorite(listing);
-      }catch(error){
-        $('#favoriteStatus').textContent = error.message;
-      }finally{
-        button.disabled = false;
-      }
-    };
+      const username = account.user.username;
+      const result = await request(`/api/favorites/${encodeURIComponent(id)}`, {
+        method:favorites.has(id) ? 'DELETE' : 'PUT',
+        favoriteAccount:username,
+      });
+      removePendingFavorites('favorite-import.' + username, [id]);
+      setFavoriteIds(result.favorites);
+      notifyFavoriteChange();
+    })().catch(error=>{
+      notice.textContent = error.message;
+      if([401,403,409].includes(error.status)) refreshQueued = true;
+    }).finally(()=>{
+      favoriteRequest = null;
+      finishFavoriteOperation();
+    });
+    syncHearts();
   }
 
   function openAccount(){
     $('#accountStatus').textContent = '';
-    renderFavorites();
     openM('maskAccount');
     if(!account.user) $('#accountUsername').focus();
   }
 
   async function submitAccount(event){
     event.preventDefault();
+    if(authBusy) return;
     const action = event.submitter?.value==='register' ? 'register' : 'login';
     const form = event.currentTarget;
     const buttons = [...form.querySelectorAll('button')];
     const status = $('#accountStatus');
+    authBusy = true;
+    syncHearts();
     buttons.forEach(button=>{ button.disabled = true; });
     status.textContent = '';
     try{
-      setAccount(await request(`/api/auth/${action}`, {
+      await Promise.allSettled([sessionRequest, favoriteRequest]);
+      await applySession(await request(`/api/auth/${action}`, {
         method:'POST',
         body:{username:$('#accountUsername').value, password:$('#accountPassword').value},
       }));
+      notifyFavoriteChange();
       form.reset();
-      $('#btnLogout').focus();
+      if($('#maskAccount').classList.contains('show')) $('#btnLogout').focus();
     }catch(error){
       status.textContent = error.message;
     }finally{
       buttons.forEach(button=>{ button.disabled = false; });
+      authBusy = false;
+      finishFavoriteOperation();
     }
   }
 
   async function logout(){
+    if(authBusy) return;
     const button = $('#btnLogout');
+    authBusy = true;
+    syncHearts();
     button.disabled = true;
     $('#accountStatus').textContent = '';
     try{
+      await Promise.allSettled([sessionRequest, favoriteRequest]);
       setAccount(await request('/api/auth/logout',{method:'POST'}));
-      $('#accountUsername').focus();
+      $('#favoriteNotice').textContent = '';
+      notifyFavoriteChange();
+      if($('#maskAccount').classList.contains('show')) $('#accountUsername').focus();
     }catch(error){
       $('#accountStatus').textContent = error.message;
     }finally{
       button.disabled = false;
+      authBusy = false;
+      finishFavoriteOperation();
     }
   }
 
@@ -225,7 +295,7 @@
   }
 
   window.housingBackend = {
-    allListings, showFavorite, renderRouteControl,
+    allListings, renderRouteControl, favoritesBusy, toggleFavorite,
     signedIn:()=>Boolean(account.user),
     search:filters=>request('/api/listings?'+new URLSearchParams(filters)),
     savePreferences:async profile=>{
@@ -237,16 +307,25 @@
   $('#btnAccount').hidden = false;
   $('#btnAccount').onclick = openAccount;
   $('#accountForm').onsubmit = submitAccount;
+  $('#accountFavorites').onclick = ()=>closeM('maskAccount');
   $('#btnLogout').onclick = logout;
   $('#btnRoute').onclick = fetchRoutes;
   $('#keyState').textContent = canRoute ? '已配置后端路线规划' : '路线使用距离估算';
+
+  window.addEventListener('storage', event=>{
+    if(event.key===storagePrefix+'favorite-sync') refreshFavorites();
+  });
+  window.addEventListener('hashchange', ()=>{
+    if(currentPage()==='saved') refreshFavorites();
+  });
+  document.addEventListener('visibilitychange', refreshFavorites);
+  window.addEventListener('pageshow', event=>{ if(event.persisted) refreshFavorites(); });
 
   refreshSession().catch(error=>{ $('#accountStatus').textContent = error.message; });
   allListings().then(rows=>{
     loadListingRows(rows, '共享房源数据库');
     $('#btnSearch').disabled = !rows.length;
     if(!rows.length) $('#summary').textContent = '暂时没有可查询的房源。';
-    renderFavorites();
     window.dispatchEvent(new CustomEvent('housing:listings-ready', {detail:{count:rows.length}}));
   }).catch(error=>{
     $('#summary').textContent = error.message;
