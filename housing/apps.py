@@ -4,4 +4,4 @@ from django.apps import AppConfig
 class HousingConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "housing"
-    verbose_name = "实习窝房源"
+    verbose_name = "长虹居房源"

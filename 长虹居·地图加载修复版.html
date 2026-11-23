@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>实习窝 · 北京实习生合租</title>
+<title>长虹居 · 北京实习生合租</title>
 
 <style>
   :root {
@@ -668,9 +668,235 @@ html[data-direction=back]::view-transition-new(nest-page) { animation-name: page
 .nearby-card{min-width:0}
 .nearby-why{margin:7px 2px 0}
 </style>
+<style media="screen">
+/* Shared screen surfaces and type for the guided search, results and detail pages. */
+:root {
+  --bg: #f7f3eb;
+  --card: #fffdf9;
+  --primary: #9d412c;
+  --primary-dark: #76301f;
+  --primary-soft: #f6e7dc;
+  --text: #2c2924;
+  --sub: #615c52;
+  --line: #e5dacb;
+  --r: 18px;
+  --shadow: 0 1px 2px rgb(64 44 28 / 4%), 0 8px 24px rgb(64 44 28 / 6%);
+  --surface-muted: #f2ece2;
+  --housing-green: #3d5d4f;
+}
+body {
+  background: radial-gradient(ellipse at 14% 0%, #f2e7d7 0%, transparent 700px),
+    radial-gradient(ellipse at 94% 14%, #f8f5ee 0%, transparent 580px), var(--bg);
+  background-repeat: no-repeat;
+}
+.topbar {
+  background: #fffcf6;
+  border-bottom: 1px solid var(--line);
+}
+.wordmark { color: #302820; }
+.brand-symbol {
+  background: linear-gradient(145deg, #ad593d, var(--primary-dark));
+  box-shadow: inset 0 1px 0 #ffffff38, 0 3px 8px #8d45273a;
+}
+.wordmark .latin { color: #776552; }
+.main-nav a:hover, .main-nav a[aria-current="page"] { color: var(--primary-dark); }
+.main-nav a[aria-current="page"]::after { background: var(--primary); }
+.nav-right .saved-link:hover { color: var(--primary-dark); }
+
+.journey-progress { max-width: 1120px; }
+.journey-progress li { border-color: #dfd2c1; }
+.journey-progress li[aria-current] { color: var(--primary-dark); }
+.journey-progress li.complete { color: var(--housing-green); border-color: #8caa96; }
+.journey-layout {
+  max-width: 1120px;
+  gap: clamp(16px, 2.1vw, 30px);
+}
+.journey-layout .hero {
+  border-radius: 22px;
+  box-shadow: 0 14px 32px rgb(58 38 24 / 17%);
+}
+.journey-layout .hero::after {
+  background: linear-gradient(90deg, #261a13db 0%, #2c2117a6 38%, #291c1224 100%),
+    linear-gradient(0deg, #21160fbf, transparent 50%);
+}
+.journey-layout .hero-copy { padding-inline: clamp(26px, 3vw, 42px); }
+.journey-layout .hero h2 {
+  font-size: clamp(34px, 3.6vw, 49px);
+  line-height: 1.17;
+  font-weight: 730;
+  text-shadow: 0 1px 12px #21160f69;
+}
+.journey-layout .hero-kicker { color: #f9e5cd; }
+.journey-layout .hero-sub { color: #fff4e4; }
+.journey-layout .accent-period { color: #ffc399; }
+.journey-layout .slide-caption { color: #fff2dd; }
+body[data-page] #searchZone.guide-shell, #maskQ {
+  border-radius: 22px;
+  border-color: #e4d7c8;
+  background: radial-gradient(ellipse at top right, #f7ebdc 0%, transparent 275px), var(--card);
+  box-shadow: var(--shadow);
+}
+#guideTitle, #habitTitle, #resultsTitle, #dtTitle, #leadTitle {
+  font-weight: 770;
+  letter-spacing: -.045em;
+}
+#guideTitle, #habitTitle { font-size: clamp(30px, 3.22vw, 42px); }
+#guideIntro, #habitIntro { color: var(--sub); }
+.step-caption {
+  width: fit-content;
+  padding: 4px 9px;
+  border: 1px solid #e9cfc0;
+  border-radius: 999px;
+  background: #fbefe6;
+  color: var(--primary-dark);
+  font-weight: 680;
+  font-variant-numeric: tabular-nums;
+}
+.guide-shell .mode-row, .tabs {
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: var(--surface-muted);
+}
+.guide-shell .mode, .tab { border-radius: 9px; }
+.guide-shell .mode.on, .tab.on {
+  border-color: #dab7a2;
+  background: #fffaf4;
+  color: var(--primary-dark);
+  box-shadow: 0 2px 6px #67412213;
+}
+.guide-shell .suggest input, .guide-shell .field input, .guide-shell .field select {
+  border-color: #d8c8b6;
+  border-radius: 12px;
+  background: #fffefa;
+}
+.guide-shell .suggest input::placeholder { color: #726b5e; }
+.sug-list {
+  border-radius: 12px;
+  background: var(--card);
+  box-shadow: 0 12px 26px rgb(64 44 28 / 16%);
+}
+.guide-shell .sug-list .sel, .guide-shell .sug-list .sug-item:hover { background: var(--primary-soft); }
+.guide-shell .locked-loc {
+  border-radius: 0 8px 8px 0;
+  background: #f9f2e8;
+}
+.guide-shell .chip, #maskQ .seg button {
+  border-radius: 10px;
+  border-color: #d9cbb9;
+  background: #fffdf8;
+}
+.guide-shell .chip.on, #maskQ .seg button.on {
+  background: var(--primary-soft);
+  border-color: #bd8268;
+  color: var(--primary-dark);
+}
+#maskQ .q-item {
+  padding: 14px;
+  border: 1px solid #ebdfd1;
+  border-radius: 14px;
+  background: #fbf7ef;
+}
+#maskQ .q-h { color: var(--sub); }
+.guide-actions #guideNext, .guide-actions #btnSearch, #maskQ .actions .btn-p {
+  border-radius: 12px;
+  border-color: var(--primary);
+  background: linear-gradient(145deg, #a95136, #873622);
+  box-shadow: 0 3px 9px #8a3a2630;
+}
+.guide-actions #guideNext:not(:disabled):hover, .guide-actions #btnSearch:not(:disabled):hover,
+#maskQ .actions .btn-p:not(:disabled):hover {
+  background: var(--primary-dark);
+}
+.quiet-button, .nav-right #btnAccount {
+  border-color: #dfd1be;
+  border-radius: 11px;
+  background: var(--card);
+}
+.quiet-button:hover, .nav-right #btnAccount:hover { background: #fbf2e8; }
+
+/* Keep the property list, map and room details in the same warm palette. */
+body[data-page=results] #resultsTitle { font-size: clamp(27px, 2.9vw, 38px); }
+#results > .section-heading {
+  padding: 0 0 15px;
+  border-bottom: 1px solid var(--line);
+}
+#results .summary { color: var(--sub); line-height: 1.65; }
+#results .q-state { color: var(--primary-dark); }
+#results .text-btn { color: var(--primary-dark); }
+.home-card {
+  border-radius: 17px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+.home-card:hover, .home-card:focus-within {
+  border-color: #c9ac93;
+  box-shadow: 0 9px 24px rgb(64 44 28 / 11%);
+}
+.house-body { padding: 15px 16px 14px; }
+.house-body h3 { color: #302820; letter-spacing: -.025em; }
+.house-meta, .area-label, .match-note { color: var(--sub); }
+.house-price {
+  color: var(--primary-dark);
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+}
+.house-price small { color: var(--sub); }
+.home-card button.house-channel {
+  border-radius: 8px;
+  border-color: #e4cfbd;
+  background: #faf0e5;
+  color: var(--primary-dark);
+}
+.feat-chip, .room-score {
+  background: #edf2ea;
+  border-color: #dbe6d9;
+  color: var(--housing-green);
+}
+.map-panel, .cost-panel, .modal { background: var(--card); box-shadow: var(--shadow); }
+.map-heading {
+  background: #fbf6ed;
+  border-bottom: 1px solid var(--line);
+}
+.map-heading h3, .cost-panel h2 { color: #2d493d; }
+.map-note { background: #fbf6ed; color: var(--sub); }
+.trip-sheet {
+  background: var(--card);
+  border-color: var(--line);
+}
+.trip-actions .trip-action {
+  background: #f0f3ec;
+  border-color: #ccd9cf;
+  color: #315344;
+}
+.trip-actions .trip-action:hover { background: #e7efe6; }
+
+.detail-title { padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.detail-meta, .detail-section-hint { color: var(--sub); }
+.cost-panel, #detailPanels .detail-section { border-color: var(--line); }
+.detail-section > summary { color: #3b342a; }
+#detailPanels .detail-section[open] > summary { color: var(--primary-dark); }
+.detail-metrics dd, .room-fee-summary strong { font-variant-numeric: tabular-nums; }
+.page-footer .footer-sign { color: var(--sub); }
+.page-footer .footer-sign b { color: #46392d; }
+
+@media (min-width: 741px) {
+  .journey-layout { grid-template-columns: minmax(260px, .87fr) minmax(0, 1.13fr); }
+}
+@media (max-width: 740px) {
+  .journey-progress { margin-top: 23px; }
+  .journey-layout .hero { height: 128px; border-radius: 17px; }
+  .journey-layout .hero-copy { padding: 16px 19px; }
+  .journey-layout .hero h2 { font-size: clamp(21px, 6vw, 28px); }
+  body[data-page] #searchZone.guide-shell, #maskQ {
+    margin-top: 0;
+    border-radius: 17px;
+  }
+  #maskQ .q-item { padding: 12px; }
+}
+</style>
 </head>
 <body><header class="topbar"><div class="topbar-inner">
-  <a href="#home" class="wordmark" aria-label="实习窝首页"><span class="brand-symbol" data-icon="nest"></span>实习窝<span class="latin">NEST</span></a>
+  <a href="#home" class="wordmark" aria-label="长虹居首页"><span class="brand-symbol" data-icon="nest"></span>长虹居</a>
   <nav class="main-nav" aria-label="主导航"><a href="#home" data-nav="home">开始找房</a><a href="#habits" data-nav="habits">合租偏好</a><a href="#browse" data-nav="browse">浏览房源</a><a href="#map" data-nav="map">通勤地图</a></nav>
   <div class="nav-right"><span class="city"><i data-icon="pin"></i>北京</span><a class="saved-link" href="#saved" data-nav="saved" aria-label="我的收藏"><i data-icon="heart"></i><span>我的收藏</span></a><button id="btnAccount" hidden>登录</button><span id="demoBadge" hidden></span></div>
 </div></header>
@@ -683,7 +909,7 @@ html[data-direction=back]::view-transition-new(nest-page) { animation-name: page
 <div id="journeyLayout" class="journey-layout">
 <section class="hero" id="hero" aria-label="合租空间轮播">
   <div class="hero-photos" aria-hidden="true"><div class="active"></div><div></div><div></div></div>
-  <div class="hero-copy"><p class="hero-kicker"><span></span>北京 · 实习生合租</p><h2>从通勤出发，<br>找到住处<span class="accent-period">。</span></h2><p class="hero-sub">在地图上比较每天的路，<br>也看看沿途有哪些合拍的家。</p></div>
+  <div class="hero-copy"><p class="hero-kicker"><span></span>北京 · 实习生合租</p><h2>居京朝暮<span class="accent-period">，</span><br>共住一程</h2><p class="hero-sub">在地图上比较每天的路，<br>也看看沿途有哪些合拍的家。</p></div>
   <div class="slide-control"><div class="slide-dots" aria-label="选择场景"></div><button type="button" id="pauseHero" aria-label="暂停轮播"></button></div>
   <span class="slide-caption" id="sceneName"></span>
 </section>
@@ -704,8 +930,8 @@ html[data-direction=back]::view-transition-new(nest-page) { animation-name: page
 
         <div class="loc-panes on" id="pInput">
           <div class="suggest">
-            <input type="text" id="poiText" autocomplete="off" placeholder="公司、园区或地址，如中关村">
-            <div class="sug-list" id="sugList"></div>
+            <input type="text" id="poiText" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="sugList" aria-expanded="false" placeholder="公司、园区或地址，如中关村">
+            <div class="sug-list" id="sugList" role="listbox" aria-label="地点建议"></div>
           </div>
           <div class="loc-hint" id="locHint" role="status"></div>
         </div>
@@ -2086,17 +2312,17 @@ function resolveFreeText(text){
   if(hitDistrict) return districtCentroid(hitDistrict);
   return null;
 }
-async function amapLocate(text){
+async function amapLocate(text, signal){
   const key=window.nestAmap?.key() || AMAP_KEY;
   if(!key) return null;
   try{
-    const tips = await fetch(`https://restapi.amap.com/v3/assistant/inputtips?key=${encodeURIComponent(key)}&city=北京&citylimit=true&keywords=${encodeURIComponent(text)}`).then(r=>r.json());
+    const tips = await fetch(`https://restapi.amap.com/v3/assistant/inputtips?key=${encodeURIComponent(key)}&city=北京&citylimit=true&keywords=${encodeURIComponent(text)}`, {signal}).then(r=>r.json());
     const t = (tips&&tips.status==='1'&&tips.tips||[]).find(x=>x.location);
     if(t){ const [lng,lat]=t.location.split(',').map(Number); return {name:t.name, lng, lat, mode:'amap', kind:'在线定位', note:'高德 inputtips'}; }
-    const geo = await fetch(`https://restapi.amap.com/v3/geocode/geo?key=${encodeURIComponent(key)}&city=北京&address=${encodeURIComponent(text)}`).then(r=>r.json());
+    const geo = await fetch(`https://restapi.amap.com/v3/geocode/geo?key=${encodeURIComponent(key)}&city=北京&address=${encodeURIComponent(text)}`, {signal}).then(r=>r.json());
     const g = (geo&&geo.status==='1'&&geo.geocodes||[])[0];
     if(g){ const [lng,lat]=g.location.split(',').map(Number); return {name:g.formatted_address||text, lng, lat, mode:'amap', kind:'门牌号', note:'高德地理编码'}; }
-  }catch(e){ console.warn('高德在线定位失败，回落离线兜底', e); }
+  }catch(e){ if(!signal?.aborted) console.warn('高德在线定位失败，回落离线兜底', e); }
   return null;
 }
 async function resolveAnchor(){
@@ -2147,6 +2373,11 @@ function renderAreaChips(d){
     wrap.appendChild(b);
   });
 }
+function hidePoiList(){
+  $('#sugList').classList.remove('on');
+  $('#poiText').setAttribute('aria-expanded','false');
+  $('#poiText').removeAttribute('aria-activedescendant');
+}
 function showLock(a){
   lastAnchor = a;
   $('#poiText').value=a.name;
@@ -2154,7 +2385,7 @@ function showLock(a){
   $('#lockText').innerHTML = `已选 <b>${escapeHtml(a.name)}</b>` +
     (a.mode==='area' ? '<span class="lock-note">片区级估算</span>' : '');
   $('#searchFeedback').textContent = '';
-  $('#sugList').classList.remove('on');
+  hidePoiList();
 }
 /* ============ 通勤模型（距离近似；配 AMAP_KEY 后可换路径规划预计算） ============ */
 function hav(la1,lo1,la2,lo2){
@@ -2604,7 +2835,7 @@ function tplHTML(l, days){
     ? `屋内现有宠物，乙方确认知悉并同意；宠物活动区域、清洁与咬坏物品赔偿由${F(70)}负责，公共区域粪便与毛发当日清理。`
     : `屋内不养宠物，任何一方不得未经书面同意带宠物入住或长期留宿他人宠物。`;
   return `<h5>短期合租协议</h5>
-  <div class="tp-sub">（实习生短租版 · 由「实习窝」按房源 ${escapeHtml(l.key)} 自动生成，${isoDate(new Date())}）</div>
+  <div class="tp-sub">（实习生短租版 · 由「长虹居」按房源 ${escapeHtml(l.key)} 自动生成，${isoDate(new Date())}）</div>
   <p>甲方（现承租人/室友）：${F(120)}　身份证号：${F(150)}　联系电话：${F(100)}</p>
   <p>乙方（实习生）：${F(120)}　身份证号：${F(150)}　学校及实习单位：${F(160)}</p>
   <p class="ps-sec">房屋坐落</p>
@@ -2639,7 +2870,7 @@ function buildPrintSheet(){
   $('#printSheet').innerHTML =
     `<div class="ps-meta">房源标识 ${escapeHtml(l.key)} · ${escapeHtml(l.dataKind)} · ${escapeHtml(l.addr)} · ${escapeHtml(l.roomType)} ${l.roomSqm}㎡ · ¥${fmt(l.rent)}/月 ${l.payText} · 实习期 ${days} 天</div>`
     + $('#dtTpl').innerHTML
-    + `<div class="ps-foot">本文本由「实习窝」原型按房源字段自动生成，已在页面内在线编辑；打印时可选择「另存为 PDF」。生成的模板供参考，签署前请核对房屋产权、出租方身份与原始租赁合同。数据来源：${escapeHtml(SRC_LABEL)}。</div>`;
+    + `<div class="ps-foot">本文本由「长虹居」原型按房源字段自动生成，已在页面内在线编辑；打印时可选择「另存为 PDF」。生成的模板供参考，签署前请核对房屋产权、出租方身份与原始租赁合同。数据来源：${escapeHtml(SRC_LABEL)}。</div>`;
   return $('#printSheet');
 }
 function printPDF(){
@@ -2692,64 +2923,128 @@ function buildForm(){
   $('#ruleTbl').innerHTML = RULE_HTML;
   $('#keyState').textContent = AMAP_KEY ? '已配置在线地点搜索' : '使用内置地点索引';
   // 地点输入面板
+  const inp=$('#poiText'), box=$('#sugList');
+  let items=[], active=-1, timer=0, lookup=null, composing=false;
+  function closeSuggestions(){
+    if(timer || lookup) setLocHint('');
+    clearTimeout(timer);
+    timer=0;
+    lookup?.abort();
+    lookup=null;
+    items=[];
+    active=-1;
+    hidePoiList();
+    box.replaceChildren();
+  }
   $$('.mode').forEach(b=>b.onclick=()=>{
     $$('.mode').forEach(x=>{
       x.classList.toggle('on', x===b);
       x.setAttribute('aria-pressed', String(x===b));
     });
     $$('.loc-panes').forEach(p=>p.classList.toggle('on', p.id===b.dataset.pane));
-    pendingAnchor=null; $('#poiText').value=''; $('#lockedLoc').style.display='none';
+    closeSuggestions();
+    pendingAnchor=null; inp.value=''; $('#lockedLoc').style.display='none';
     $('#locHint').textContent=''; $('#searchFeedback').textContent='';
-    $('#sugList').classList.remove('on');
   });
-  const inp=$('#poiText'), box=$('#sugList'); let sel=-1;
-  const paint=(items,q)=>{
-    if(!items.length){ box.classList.remove('on'); box.innerHTML=''; return; }
-    box.innerHTML = items.map((it,i)=>`<div class="sug-item${i===sel?' sel':''}" data-i="${i}">
+  function selectSuggestion(index){
+    box.children[active]?.classList.remove('sel');
+    box.children[active]?.setAttribute('aria-selected','false');
+    active=index;
+    const option=box.children[index];
+    option.classList.add('sel');
+    option.setAttribute('aria-selected','true');
+    inp.setAttribute('aria-activedescendant',option.id);
+    if(option.offsetTop<box.scrollTop) box.scrollTop=option.offsetTop;
+    else if(option.offsetTop+option.offsetHeight>box.scrollTop+box.clientHeight){
+      box.scrollTop=option.offsetTop+option.offsetHeight-box.clientHeight;
+    }
+  }
+  function paint(matches,q,index=0){
+    items=matches;
+    active=-1;
+    box.innerHTML = matches.map((it,i)=>`<div class="sug-item" id="poi-option-${i}" data-i="${i}" role="option" aria-selected="false">
         <span class="sg-kind">${escapeHtml(it.kind)}</span><span>${hl(it.name,q)}</span>
         <span class="sg-meta">${it.mode==='area'?'片区中心':escapeHtml(it.note||'')}</span></div>`).join('');
     box.classList.add('on');
-    $$('.sug-item', box).forEach(el=>el.addEventListener('mousedown',e=>{e.preventDefault(); choose(items[+el.dataset.i], inp.value);}));
-  };
-  function choose(it, raw){
-    pendingAnchor = anchorFromPOI(it, raw);
-    inp.value = it.name;
-    box.classList.remove('on'); sel=-1;
+    box.scrollTop=0;
+    inp.setAttribute('aria-expanded','true');
+    selectSuggestion(index);
+  }
+  function choose(it){
+    if(!it) return;
+    pendingAnchor=anchorFromPOI(it,inp.value);
+    closeSuggestions();
     showLock(pendingAnchor);
     setLocHint('');
   }
-  inp.addEventListener('input', async ()=>{
-    const q = inp.value; pendingAnchor=null; $('#lockedLoc').style.display='none';
-    if(!q.trim()){ box.classList.remove('on'); sel=-1; setLocHint(''); return; }
-    let items = suggest(q);
-    if(!items.length && (window.nestAmap?.key() || AMAP_KEY)){
-      setLocHint('本地索引未命中，正在请求高德输入提示…');
-      const online = await amapLocate(q);
-      if(online){ items=[{name:online.name,lng:online.lng,lat:online.lat,kind:online.kind,alias:'',mode:online.mode}]; }
-    }
-    sel = items.length?0:-1;
-    paint(items, q);
-    if(!items.length){
-      const fb = resolveFreeText(q);
-      setLocHint(fb ? '可用附近片区估算。' : '暂未找到这个地点。试试公司简称，或按片区选。', fb ? 'ok' : 'err');
-      if(fb){ pendingAnchor = {...fb}; showLock(pendingAnchor); }
-    }else{
-      setLocHint('');
-    }
+  function showLocationFallback(q){
+    const fb=resolveFreeText(q);
+    setLocHint(fb ? '可用附近片区估算。' : '暂未找到这个地点。试试公司简称，或按片区选。', fb ? 'ok' : 'err');
+    // Let the user finish typing before confirming the approximate location.
+  }
+  function updateSuggestions(){
+    closeSuggestions();
+    pendingAnchor=null;
+    $('#lockedLoc').style.display='none';
+    setLocHint('');
+    const q=inp.value.trim();
+    if(!q || document.activeElement!==inp) return;
+    const local=suggest(q);
+    if(local.length){ paint(local,q); return; }
+    if(!(window.nestAmap?.key() || AMAP_KEY)){ showLocationFallback(q); return; }
+    setLocHint('本地索引未命中，正在请求高德输入提示…');
+    timer=setTimeout(async ()=>{
+      timer=0;
+      const request=new AbortController();
+      lookup=request;
+      const online=await amapLocate(q,request.signal);
+      if(request.signal.aborted || lookup!==request) return;
+      lookup=null;
+      if(inp.value.trim()!==q || document.activeElement!==inp) return;
+      if(online){
+        setLocHint('');
+        paint([online],q);
+      }else showLocationFallback(q);
+    },200);
+  }
+  inp.addEventListener('compositionstart',()=>{
+    composing=true;
+    closeSuggestions();
+    pendingAnchor=null;
+    $('#lockedLoc').style.display='none';
+    setLocHint('');
   });
+  inp.addEventListener('compositionend',()=>{ composing=false; updateSuggestions(); });
+  inp.addEventListener('input',e=>{ if(!composing && !e.isComposing) updateSuggestions(); });
   inp.addEventListener('keydown',e=>{
-    const items = suggest(inp.value);
-    if(e.key==='ArrowDown'||e.key==='ArrowUp'){
-      if(!items.length) return; e.preventDefault();
-      sel = (sel + (e.key==='ArrowDown'?1:-1) + items.length) % items.length;
-      paint(items, inp.value);
-    } else if(e.key==='Enter'){
-      if(sel>=0 && items[sel]){ e.preventDefault(); choose(items[sel], inp.value); }
-      else if(items.length){ e.preventDefault(); choose(items[0], inp.value); }
-    } else if(e.key==='Escape'){ box.classList.remove('on'); }
+    if(composing || e.isComposing || e.keyCode===229) return;
+    const open=box.classList.contains('on');
+    if(e.key==='ArrowDown' || e.key==='ArrowUp'){
+      const down=e.key==='ArrowDown';
+      if(open){
+        e.preventDefault();
+        selectSuggestion((active+(down?1:-1)+items.length)%items.length);
+      }else if(!pendingAnchor){
+        const matches=suggest(inp.value);
+        if(!matches.length) return;
+        e.preventDefault();
+        paint(matches,inp.value,down?0:matches.length-1);
+      }
+    }else if(e.key==='Enter' && open){
+      e.preventDefault();
+      choose(items[active]);
+    }else if(e.key==='Escape' && (open || timer || lookup)){
+      e.preventDefault();
+      closeSuggestions();
+    }
   });
-  inp.addEventListener('blur', ()=>setTimeout(()=>box.classList.remove('on'),80));
-  $('#lockClear').onclick=()=>{ pendingAnchor=null; $('#lockedLoc').style.display='none'; $('.mode[data-pane="pInput"]').click(); $('#poiText').focus(); };
+  box.addEventListener('mousedown',e=>{ if(e.button===0 && e.target.closest('.sug-item')) e.preventDefault(); });
+  box.addEventListener('click',e=>{
+    const option=e.target.closest('.sug-item');
+    if(option && box.classList.contains('on')) choose(items[Number(option.dataset.i)]);
+  });
+  inp.addEventListener('blur',closeSuggestions);
+  $('#lockClear').onclick=()=>{ $('.mode[data-pane="pInput"]').click(); inp.focus(); };
 
   // 画像问卷选项
   $$('#maskQ .seg button').forEach(button=>{
@@ -3356,7 +3651,7 @@ const bytes=Uint8Array.from(atob("eNrsvUkPdceRJfZftCYKOQ+9tAGvvf9QC7VK7hasKrZVKt
     const modes={walk:'walk',bike:'ride',metro:'bus',taxi:'car'};
     if(!coordinate(start)||!coordinate(end)||!Object.hasOwn(modes,mode))return null;
     const dest=(p,name)=>p.map(v=>v.toFixed(6)).join(',')+','+String(name).replaceAll(',','，');
-    const params=new URLSearchParams({from:dest(start,startName),to:dest(end,endName),mode:modes[mode],src:'实习窝',callnative:'1'});
+    const params=new URLSearchParams({from:dest(start,startName),to:dest(end,endName),mode:modes[mode],src:'长虹居',callnative:'1'});
     return 'https://uri.amap.com/navigation?'+params;
   };
 })();
@@ -3740,6 +4035,7 @@ function metroJourney(start,end){
     let frame=0,dead=false,map=null,ready=false,loading=false;
     const root=node('div','ct-map');root.dataset.mode=mode;root.dataset.source='local';
     const stage=node('div','ct-stage');stage.tabIndex=0;stage.setAttribute('role','group');stage.setAttribute('aria-label','地图：方向键平移，加减键缩放');
+    if(overview)stage.setAttribute('aria-description','按住 Ctrl 或 Command 滚动，可缩放地图。');
     const canvas=node('canvas','ct-local'),terrain=node('div','ct-online'),overlay=document.createElementNS(svgNS,'svg'),pins=node('div','ct-pins');
     overlay.classList.add('ct-ink');if(mode==='metro'){overlay.setAttribute('role','group');overlay.setAttribute('aria-label','地铁站点与站间连线示意')}else overlay.setAttribute('aria-hidden','true');stage.append(canvas,terrain,overlay,pins);root.append(stage);container.replaceChildren(root);
     const renderer=window.createNestBasemap?.(canvas,data);
@@ -4040,6 +4336,9 @@ function metroJourney(start,end){
       const close=btn('关闭车站信息','×','ct-dismiss');close.onclick=()=>{preview.hidden=true;activeLine=null;schedule();stage.focus({preventScroll:true})};preview.replaceChildren(label,chips,close);preview.hidden=false;if(focusedLine)chips.querySelector('[data-line="'+focusedLine+'"]')?.focus();
     }
     function drawOverlay(){
+      const focused=document.activeElement;
+      const focusKey=pins.contains(focused)||overlay.contains(focused)?focused.getAttribute('data-map-focus'):null;
+      let nextFocus=null;
       const ink=document.createDocumentFragment(), markers=document.createDocumentFragment(), occupied=[];
       const visible=(p,m=0)=>p.x>=-m&&p.y>=-m&&p.x<=w+m&&p.y<=h+m;
       const a=project(origin), groups=[];
@@ -4070,6 +4369,9 @@ function metroJourney(start,end){
           if(!visible(p,6))continue;
           const transfer=served.size>1, muted=Boolean(activeLine&&!served.has(activeLine));
           const stationGroup=vector('g',{role:'button',tabindex:0,'aria-label':stationDisplayName(s.name)+'，'+[...served].map(lineName).join('、')},ink);
+          const focusId='station:'+s.name;
+          stationGroup.setAttribute('data-map-focus',focusId);
+          if(focusKey===focusId)nextFocus=stationGroup;
           stationGroup.onclick=()=>stationCard(s,served);
           stationGroup.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();stationCard(s,served);preview.querySelector('button')?.focus()}};
           vector('circle',{cx:p.x,cy:p.y,r:10,fill:'transparent'},stationGroup);
@@ -4097,9 +4399,14 @@ function metroJourney(start,end){
         for(const p of [pts[0],pts.at(-1)])vector('circle',{cx:p.x,cy:p.y,r:4.2,fill:'#fff',stroke:color,'stroke-width':2},ink);}
       annotate(ink);
       for(const {p,members} of groups){const active=members.includes(selected), item=active?selected:members[0];if(active){p.x=project(item.point).x;p.y=project(item.point).y;}const tag=btn('查看'+item.l.area+'附近房源，'+(item.reasons?'月租 ':'月总 ')+money(item.total)+' 元','¥'+money(item.total),'ct-pin'+(active?' active':''));
-        if(members.length>1)tag.append(node('small','',members.length));tag.style.left=p.x+'px';tag.style.top=p.y+'px';tag.onclick=()=>showJourney(members,item);markers.append(tag);}
+        if(members.length>1)tag.append(node('small','',members.length));tag.style.left=p.x+'px';tag.style.top=p.y+'px';tag.onclick=()=>showJourney(members,item);
+        const focusId='listing:'+item.l.key;
+        tag.dataset.mapFocus=focusId;
+        if(focusKey===focusId)nextFocus=tag;
+        markers.append(tag);}
       if(visible(a,50)){const mark=node('div','ct-origin');mark.style.left=a.x+'px';mark.style.top=a.y+'px';mark.append(node('i'),node('b','','实习 · '+poi.name));markers.append(mark);}
       overlay.setAttribute('viewBox',`0 0 ${w} ${h}`);overlay.replaceChildren(ink);pins.replaceChildren(markers);
+      if(focusKey)(nextFocus||stage).focus({preventScroll:true});
     }
     let onlineGeneration=0,onlineCamera='',onlineIdle=false,tileError=false,onlineProblem=false;
     let onlineTimer=0,localCamera='';
@@ -4226,9 +4533,19 @@ function metroJourney(start,end){
     const zoomBy=v=>{zoom=clamp(zoom+v,9,18.25);schedule()};
     plus.onclick=()=>zoomBy(.75);minus.onclick=()=>zoomBy(-.75);tilt.onclick=()=>{pitch=pitch?0:Math.max(36,initialPitch);schedule()};compass.onclick=()=>{bearing=(bearing+30)%360;schedule()};
     fit.onclick=()=>{if(tripOpen){fullJourney();return;}if(homes.length)fitPoints([origin,...homes.map(v=>v.point)],false);else{center=[...origin];zoom=initialZoom;schedule()}};
-    function pan(dx,dy){center=unproject(w/2-dx,h/2-dy);draw()}
+    function pan(dx,dy){
+      const current=project(center);
+      center=unproject(current.x-dx,current.y-dy);
+      schedule();
+    }
     stage.addEventListener('keydown',e=>{if(e.target!==stage)return;const directions={ArrowLeft:[70,0],ArrowRight:[-70,0],ArrowUp:[0,70],ArrowDown:[0,-70]};if(directions[e.key]){e.preventDefault();pan(...directions[e.key])}else if(['+','=','-'].includes(e.key)){e.preventDefault();zoomBy(e.key==='-'?-.6:.6)}});
-    stage.addEventListener('wheel',e=>{e.preventDefault();const d=Math.max(-1,Math.min(1,e.deltaY/100));zoomBy(-d*.4)},{passive:false});
+    stage.addEventListener('wheel',e=>{
+      if((overview&&!e.ctrlKey&&!e.metaKey)||!e.deltaY||!e.cancelable)return;
+      e.preventDefault();
+      const unit=e.deltaMode===1?16:e.deltaMode===2?h:1;
+      const d=clamp(e.deltaY*unit/100,-1,1);
+      zoomBy(-d*.4);
+    },{passive:false});
     const pointers=new Map();let span=0;
     const spacing=()=>{const [a,b]=pointers.values();return b?Math.hypot(a.x-b.x,a.y-b.y):0};
     stage.addEventListener('pointerdown',e=>{if(e.button!==0||e.target.closest('button,[role=button]'))return;pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});span=spacing();stage.setPointerCapture(e.pointerId)});
@@ -5281,7 +5598,22 @@ function remember(key,value,session=false){
 function currentPage(){return (location.hash.slice(1)||'home').split('/')[0]}
 function navigate(route){if(location.hash==='#'+route)applyRoute(false);else location.hash=route}
 function listingRoute(l){return '#room/'+encodeURIComponent(l.key)}
-function openDetail(iid,toTpl){const l=LISTINGS[iid];if(l)navigate(listingRoute(l).slice(1)+(toTpl?'/agreement':''))}
+let roomReturn=null;
+const roomEntryControls='a[href],button';
+function rememberRoomOrigin(trigger){
+  if(currentPage()==='room')return;
+  const control=trigger?.closest(roomEntryControls), card=control?.closest('.home-card');
+  roomReturn={
+    route:location.hash.slice(1)||'home', top:window.scrollY, control,
+    key:card?.dataset.listing, index:card?[...card.querySelectorAll(roomEntryControls)].indexOf(control):-1
+  };
+}
+function openDetail(iid,toTpl){
+  const l=LISTINGS[iid];
+  if(!l)return;
+  rememberRoomOrigin(document.activeElement);
+  navigate(listingRoute(l).slice(1)+(toTpl?'/agreement':''));
+}
 function saveQuery(){
   if(!searchState)return;
   const s=searchState;
@@ -5354,7 +5686,11 @@ async function finishMatching(){
   if(!listingsLoaded || !LISTINGS.length){ $('#qFeedback').textContent=listingsError || '正在加载房源，请稍候。'; return; }
   const profile=readPreferenceDraft();
   if(!profile.gender || !profile.pet || profile.rhythm===undefined || profile.smoke===undefined || !/^[EI][SN][TF][JP]$/.test(profile.mbti)){
-    $('#qFeedback').textContent='请完成生活习惯和室友偏好。'; return;
+    $('#qFeedback').textContent='请完成生活习惯和室友偏好。';
+    const missingMbti=[...profile.mbti].indexOf('_');
+    if(!profile.gender) $('#qGender button').focus();
+    else if(missingMbti>=0) $('#maskQ [data-p="'+missingMbti+'"] button')?.focus();
+    return;
   }
   guideBusy=true; $('#btnQApply').disabled=true;
   $('#qFeedback').textContent='正在匹配房源与室友…';
@@ -5398,7 +5734,7 @@ function sceneChange(to){
   scene=(to+names.length)%names.length;
   $$('.hero-photos div').forEach((el,i)=>el.classList.toggle('active',i===scene));
   $$('.slide-dots button').forEach((el,i)=>el.setAttribute('aria-pressed',String(i===scene)));
-  $('#sceneName').textContent=names[scene]+'  /  场景示意';
+  $('#sceneName').textContent=names[scene];
 }
 function runCarousel({restart=false}={}){
   const playing=heroPlayback ?? !REDUCE.matches;
@@ -5617,10 +5953,19 @@ function renderRoute(focus=true){
     $('#btnMapView').textContent=page==='map'?'返回匹配结果':'展开地图';
     render();
   }
-  document.title=(needsGuide?'填写找房需求':page==='room'?(curListing?.community||'房源详情'):titles[page]?.[1]||'浏览房源')+' · 实习窝';
+  document.title=(needsGuide?'填写找房需求':page==='room'?(curListing?.community||'房源详情'):titles[page]?.[1]||'浏览房源')+' · 长虹居';
   if(focus){
+    if(last==='room'&&roomReturn?.route===raw){
+      const {top,control,key,index}=roomReturn;
+      const card=key&&$$('.home-card[data-listing="'+CSS.escape(key)+'"]').find(item=>item.getClientRects().length);
+      const target=control?.getClientRects().length?control:card?.querySelectorAll(roomEntryControls)[index];
+      const fallback=resultsPage?$('#resultsTitle'):page==='saved'?$('#leadTitle'):$('#discover h2');
+      (target || fallback)?.focus({preventScroll:true});
+      window.scrollTo({top,behavior:'instant'});
+      return;
+    }
     window.scrollTo(0,0);
-    const heading=needsGuide?$('#guideTitle'):['habits','preferences'].includes(page)?$('#habitTitle'):page==='room'?$('#dtTitle'):page==='browse'?$('#discover h2'):$('#leadTitle');
+    const heading=needsGuide?$('#guideTitle'):resultsPage?$('#resultsTitle'):['habits','preferences'].includes(page)?$('#habitTitle'):page==='room'?$('#dtTitle'):page==='browse'?$('#discover h2'):$('#leadTitle');
     if(heading&&!heading.closest('[hidden]')){heading.tabIndex=-1;heading.focus({preventScroll:true})}
     if(page==='map'&&searchState&&tripListingKey)requestAnimationFrame(()=>{if(currentPage()==='map')$('#map').scrollIntoView({block:'center'})});
   }
@@ -5655,7 +6000,12 @@ let previousRoute='';
 window.addEventListener('hashchange',event=>{previousRoute=new URL(event.oldURL).hash || '#home'});
 
 function startNest(){
-  document.addEventListener('click',e=>{const action=e.target.closest('[data-trip]');if(action)selectTripListing(action.dataset.trip)});
+  document.addEventListener('click',e=>{
+    const link=e.target.closest('a[href^="#room/"]');
+    if(link&&!e.defaultPrevented&&!e.metaKey&&!e.ctrlKey&&!e.shiftKey&&!e.altKey) rememberRoomOrigin(link);
+    const action=e.target.closest('[data-trip]');
+    if(action)selectTripListing(action.dataset.trip);
+  });
   $('#roomTrip').onclick=()=>{if(curListing)selectTripListing(curListing.key)};
   $$('[data-icon]').forEach(el=>el.innerHTML=icon(el.dataset.icon));
   $('.slide-dots').innerHTML=names.map((name,i)=>'<button type="button" aria-label="切换到'+name+'" data-slide="'+i+'"></button>').join('');
@@ -5694,8 +6044,11 @@ function startNest(){
   $('#habitBack').onclick=()=>navigate(currentPage()==='habits'?'needs':'habits');
   $('#habitNext').onclick=()=>{
     const draft=readPreferenceDraft();
-    if(draft.rhythm===undefined||draft.smoke===undefined||!draft.pet){
-      $('#qFeedback').textContent='请完成作息、吸烟和宠物三项选择。';return;
+    const missing=draft.rhythm===undefined?'#qRhythm':draft.smoke===undefined?'#qSmoke':!draft.pet?'#qPet':null;
+    if(missing){
+      $('#qFeedback').textContent='请完成作息、吸烟和宠物三项选择。';
+      $(missing+' button').focus();
+      return;
     }
     navigate('preferences');
   };
@@ -5717,7 +6070,7 @@ function startNest(){
 
   $('#roomSave').onclick=()=>{if(curListing)toggleFavorite(curListing.key)};
   $('#backRoom').onclick=()=>returnToOrigin(fromRoom);
-  $('.page-footer').insertAdjacentHTML('beforeend','<div class="footer-sign"><b>实习窝 · NEST</b><span>Hack4Good 原型 · 模拟房源与室友 · 图片及户型仅作示意</span></div>');
+  $('.page-footer').insertAdjacentHTML('beforeend','<div class="footer-sign"><b>长虹居</b></div>');
   window.addEventListener('hashchange',()=>applyRoute());window.nestReady=true;applyRoute(false);
 }
 
