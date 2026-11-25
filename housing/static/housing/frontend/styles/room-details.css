@@ -1,0 +1,60 @@
+:root{--roommate-portraits:url("../images/roommate-portraits.webp")}
+/* Keep card actions above the detail link that covers the rest of the card. */
+.home-card .house-detail-link::after{content:"";position:absolute;inset:0;z-index:1}
+.home-card .house-detail-link:focus-visible{outline:none}
+.home-card .house-detail-link:focus-visible::after{outline:2px solid var(--primary-dark);outline-offset:-3px;border-radius:inherit}
+.home-card .heart-btn,.home-card .room-photo>a.house-tag,.home-card .house-channel{z-index:2}
+.home-card button.house-channel{position:relative;border:1px solid #e9d9cb;color:var(--primary-dark);font-weight:650;padding:4px 8px}
+.home-card button.house-channel:hover{background:var(--primary-soft);border-color:#cda68e}
+
+#detailPanels{margin-top:20px;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);align-items:start;gap:14px;border:0}
+#detailPanels .detail-column{display:grid;gap:14px;min-width:0}
+#detailPanels .detail-section{margin:0;min-width:0;background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
+#detailPanels .detail-wide{grid-column:1/-1;display:grid;gap:12px;min-width:0}
+#detailPanels .detail-section>summary{padding:14px 18px;align-items:baseline;flex-wrap:wrap}
+#detailPanels .detail-content{padding:0 18px 16px}
+.room-panel-title{display:flex;align-items:baseline;flex-wrap:wrap;gap:5px 9px;padding:15px 18px 0;margin-bottom:13px}
+.room-panel-title h2{margin:0;font-size:16px;line-height:1.45;color:var(--text)}
+.room-panel-title span{font-size:12px;color:var(--sub)}
+#detailPanels .detail-facts{margin:0;min-width:0}
+.detail-facts>div{padding:9px 0;display:grid;grid-template-columns:6em minmax(0,1fr);gap:9px;border-top:1px solid var(--line)}
+.detail-facts>div:first-child{border-top:0;padding-top:0}
+.detail-facts>div:last-child{padding-bottom:0}
+.detail-facts dt{font-size:13px;color:var(--sub)}
+.detail-facts dd{margin:0;overflow-wrap:anywhere;line-height:1.6}
+.detail-facts .location-link{display:inline-block;margin-top:4px;color:var(--primary-dark);text-decoration:underline;text-underline-offset:2px}
+.detail-features{display:flex;flex-wrap:wrap;gap:5px}
+.detail-features .feat-chip{white-space:normal}
+.room-fee-summary{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:4px 12px;background:var(--primary-soft);color:var(--primary-dark);padding:8px 12px;border-radius:9px;margin-bottom:12px}
+.room-fee-summary small{font-size:12px;font-weight:600}
+.room-fee-summary strong{font-size:23px;line-height:1.3;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.room-fee-summary strong span{font-size:12px;font-weight:500;margin-left:4px}
+.room-fee-breakdown{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin:0 0 11px}
+.room-fee-breakdown dt{color:var(--sub);font-size:12px}
+.room-fee-breakdown dd{font-weight:650;font-size:14px;margin:3px 0 0;font-variant-numeric:tabular-nums}
+.room-fee-payment{border-top:1px solid var(--line);margin:0;padding-top:9px}
+.room-fee-payment dt{font-size:12px;color:var(--sub)}
+.room-fee-payment dd{margin:3px 0 0}
+.roommate-people{display:grid;gap:0;list-style:none;margin:0;padding:0}
+.roommate-person{display:flex;gap:11px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.roommate-person:first-child{padding-top:0;border-top:0}
+.roommate-person:last-child{padding-bottom:0}
+.roommate-portrait{flex:none;width:46px;height:46px;border-radius:50%;background-color:var(--primary-soft);background-image:var(--roommate-portraits);background-size:400% 400%;background-position:var(--avatar-x) var(--avatar-y);border:1px solid #0000000d}
+.roommate-person-info{min-width:0}
+.roommate-person-name{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:8px}
+.roommate-person-name b{font-size:14px;overflow-wrap:anywhere}
+.roommate-person-name small{font-size:12px;color:var(--sub)}
+.roommate-person-habits{margin-top:5px;display:flex;flex-wrap:wrap;gap:3px 4px}
+.roommate-person-habits span{font-size:11px;line-height:1.4;border-radius:4px;background:#f3f4ee;color:#4d6154;padding:2px 5px}
+#dtRoommates .detail-note{line-height:1.5;margin-top:11px;font-size:12px}
+
+@media(max-width:800px){
+  #detailPanels{grid-template-columns:minmax(0,1fr);gap:12px}
+  #detailPanels .detail-column{display:contents}
+  #dtOverview{order:1}#dtFees{order:2}#dtLease{order:3}#dtRoommates{order:4}
+  #dtCommute{order:5}#dtMatchSec{order:6}#dtChecklist{order:7}#detailPanels .detail-wide{order:8}
+}
+@media(max-width:460px){
+  #detailPanels .detail-content,#detailPanels .detail-section>summary,.room-panel-title{padding-left:13px;padding-right:13px}
+  .detail-facts>div{grid-template-columns:5.1em minmax(0,1fr);gap:7px}
+}

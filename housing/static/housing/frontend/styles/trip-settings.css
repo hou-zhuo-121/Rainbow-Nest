@@ -1,0 +1,14 @@
+.trip-source{display:inline-block;margin-bottom:4px;color:#476b5a;font-weight:700}
+.trip-source[data-route-source="local"]{color:#775b3a}
+.trip-actions .trip-external{display:inline-flex;align-items:center;background:#3b6252;color:#fff;border-color:#3b6252;border-radius:7px;padding:7px 12px;font-weight:700;text-decoration:none}
+.trip-actions .trip-external:hover{background:#294d40;color:#fff}
+.trip-settings{border-top:1px solid #e2ded2;margin-top:12px;padding-top:9px;font-size:13px}
+.trip-settings summary{cursor:pointer;color:#4b675a;font-weight:700}
+.trip-settings form{margin-top:8px}
+.trip-setting-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.trip-setting-fields label{display:grid;gap:3px}
+.trip-setting-fields input{width:100%;min-width:0;border:1px solid #d2d7ce;border-radius:6px;padding:7px;background:#fff;font:inherit;color:inherit}
+.trip-setting-error{min-height:1.2em;margin:5px 0;color:#953b28}
+.trip-settings .trip-hint{margin:6px 0}
+.trip-list .trip-step:disabled{cursor:default}
+@media(max-width:650px){.trip-setting-fields{grid-template-columns:1fr}.trip-settings{font-size:14px}}

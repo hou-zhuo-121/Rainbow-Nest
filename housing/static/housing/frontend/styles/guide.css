@@ -1,0 +1,222 @@
+/* Step pages reuse the colours and components from the repository design. */
+main { min-height: calc(100svh - 220px); view-transition-name: nest-page; }
+.main-nav { align-items: center; }
+.main-nav a { min-height: 44px; }
+.main-nav a[aria-current]::after { bottom: 1px; }
+.nav-right #btnAccount {
+  border: 1px solid var(--line); border-radius: 9px; background: var(--card);
+  color: var(--text); padding: 6px 11px; font-size: 13px;
+}
+.nav-right #btnAccount:hover { border-color: var(--primary); color: var(--primary); }
+.journey-progress {
+  max-width: 1080px; margin: 30px auto 0; padding: 0; list-style: none;
+  display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 12px;
+}
+.journey-progress li {
+  color: var(--sub); font-size: 12px; border-top: 2px solid var(--line);
+  padding-top: 9px; white-space: nowrap;
+}
+.journey-progress li[aria-current], .journey-progress li.complete {
+  color: var(--primary); border-color: var(--primary);
+}
+.journey-progress li[aria-current] { font-weight: 700; }
+.journey-layout {
+  display: grid; grid-template-columns: minmax(250px,.7fr) minmax(0,1.3fr);
+  max-width: 1080px; margin: 24px auto 48px; gap: 24px; align-items: stretch;
+}
+.journey-layout .hero {
+  height: auto; min-height: 500px; border-radius: 16px;
+}
+.journey-layout .hero-copy { padding: 36px 26px; }
+.journey-layout .hero h2 {
+  font-size: clamp(32px,3.2vw,46px); line-height: 1.25; letter-spacing: -.05em;
+  margin-top: 18px; font-weight: 720;
+}
+.journey-layout .hero-sub { font-size: 14px; line-height: 1.8; max-width: 240px; }
+.journey-layout .hero::after {
+  background: linear-gradient(90deg,#252918ab,#2b2b1e55),linear-gradient(0deg,#201c177d,transparent 55%);
+}
+.journey-layout .hero-photos div { background-position: 62% 50%; }
+.journey-layout .slide-control { bottom: 25px; left: 25px; }
+.journey-layout .slide-caption { bottom: 65px; left: 26px; right: auto; font-size: 11px; }
+body[data-page] #searchZone.guide-shell, #maskQ {
+  min-width: 0; max-width: none; margin: 0; padding: clamp(24px,3vw,38px);
+  border: 1px solid var(--line); border-radius: 16px; background: var(--card); box-shadow: none;
+}
+body[data-page] #searchZone.guide-shell { display: block; }
+.guide-form { padding: 0; min-width: 0; }
+.step-caption { color: var(--primary); font-size: 12px; letter-spacing: .08em; margin-bottom: 12px; }
+#guideTitle, #habitTitle {
+  font-size: clamp(28px,2.6vw,36px); font-weight: 720;
+  line-height: 1.3; letter-spacing: -.045em; color: var(--text); margin: 0;
+}
+#guideIntro, #habitIntro { color: var(--sub); font-size: 14px; line-height: 1.75; margin-top: 11px; }
+.guide-fields { display: grid; gap: 22px; margin-top: 28px; }
+.guide-shell .guide-fields .search-pop {
+  position: static; inset: auto; width: 100%; padding: 0; border: 0;
+  background: transparent; border-radius: 0; box-shadow: none;
+}
+.guide-shell .field-heading { display: none; }
+.guide-shell .field label { color: var(--text); font-size: 14px; font-weight: 600; }
+.guide-shell .mode-row { padding: 3px; margin-bottom: 12px; }
+.guide-shell .mode { min-height: 36px; font-size: 13px; padding: 7px 12px; }
+.guide-shell .suggest input, .guide-shell .field input, .guide-shell .field select {
+  min-height: 48px; padding: 10px 12px; font-size: 16px;
+  border: 1px solid #cfccbf; border-radius: 9px; background: var(--card); color: var(--text);
+}
+.guide-shell .suggest input { min-height: 52px; }
+.guide-shell input:focus, .guide-shell select:focus {
+  outline: 3px solid var(--primary-soft); outline-offset: 1px; border-color: var(--primary);
+}
+.guide-shell .chip { min-height: 36px; }
+.guide-shell .locked-loc { margin-top: 12px; }
+.guide-shell .sug-list { z-index: 20; border-color: var(--line); }
+.guide-shell .loc-hint:empty, .guide-shell .search-feedback:empty { display: none; }
+.guide-actions { display: flex; gap: 12px; align-items: center; margin-top: 28px; }
+.guide-actions #guideNext, .guide-actions #btnSearch, #maskQ .actions .btn-p {
+  display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+  background: var(--primary); color: white; border: 1px solid var(--primary);
+  border-radius: 9px; min-height: 46px; padding: 11px 22px; font-size: 14px; font-weight: 650; margin: 0;
+}
+.guide-actions #guideNext::after, .guide-actions #btnSearch::after, #habitNext::after {
+  content: "↗"; font-size: 17px; font-weight: 400; margin-left: 8px;
+}
+.guide-actions #guideNext:hover, .guide-actions #btnSearch:hover, #maskQ .actions .btn-p:hover {
+  background: var(--primary-dark);
+}
+.guide-actions #guideBack, #habitBack {
+  background: transparent; padding: 10px 16px; font-size: 14px; min-height: 46px;
+}
+.guide-actions button:disabled, #maskQ button:disabled { opacity: .55; cursor: wait; }
+#maskQ .prefs-layout { display: block; margin-top: 26px; }
+#maskQ .pref-profile { display: none; }
+#maskQ .pref-form { border: 0; padding: 0; border-radius: 0; background: transparent; }
+#maskQ .q-grid { display: grid; gap: 23px; }
+#maskQ .q-item { padding: 0; margin: 0; border: 0; }
+#maskQ .q-t { font-size: 15px; margin-bottom: 2px; }
+#maskQ .q-h { font-size: 12px; }
+#maskQ .seg { gap: 8px; margin-top: 6px; }
+#maskQ .seg button { min-height: 42px; font-size: 13px; padding: 9px 12px; }
+#maskQ .mbti-choices { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+#maskQ .mbti-row { padding: 0; margin: 0; }
+#maskQ .mbti-row .seg { display: grid; grid-template-columns: 1fr 1fr; }
+#maskQ .actions { display: flex; align-items: center; gap: 12px; margin: 4px 0 0; }
+#maskQ #qFeedback:empty { display: none; }
+#maskQ #qFeedback:not(:empty) { margin: 0; padding: 0; background: transparent; color: var(--bad); }
+#ruleBox { margin: 0; }
+.match-note { color: var(--sub); font-size: 12px; margin-top: 9px; }
+body[data-page=results] #results { margin: 28px 0 0; }
+body[data-page=results] #resultsTitle { font-size: clamp(25px,2.5vw,32px); }
+.result-toolbar .tabs { max-width: 700px; margin-bottom: 14px; }
+body[data-page=results] #resultsLayout {
+  display: grid; grid-template-columns: minmax(0,1.08fr) minmax(0,1fr); gap: 22px; align-items: start;
+}
+body[data-page=results] #resultsLayout .results-flow { display: block; min-width: 0; }
+body[data-page=results] #resultsLayout #list {
+  display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px;
+}
+body[data-page=results] #resultsLayout #mapBox {
+  display: block; grid-column: 2; grid-row: 1; position: sticky; top: 20px;
+  max-height: calc(100svh - 40px); overflow: auto;
+}
+body[data-page=results] #map { height: clamp(380px,54vh,540px); }
+body[data-page=results] .map-heading { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+body[data-page=results] .map-note { font-size: 12px; }
+body[data-page=results] .trip-sheet { margin: 0; padding: 16px; border: 0; border-radius: 0; border-top: 1px solid var(--line); }
+body[data-page=results] .trip-list { grid-template-columns: 1fr; }
+body[data-page=results] .home-card[data-selected=true] { border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
+body[data-page=results] .house-body { width: 100%; }
+body[data-page=results] .house-feat { gap: 4px; }
+body[data-page=results] .room-score { white-space: nowrap; }
+body[data-page=map] .result-toolbar { margin-bottom: 16px; }
+@media (max-width: 1100px) and (min-width: 821px) {
+  body[data-page=results] #resultsLayout { grid-template-columns: minmax(270px,.8fr) minmax(0,1.2fr); }
+  body[data-page=results] #resultsLayout #list { grid-template-columns: 1fr; }
+}
+@media (max-width: 820px) {
+  body[data-page=results] #resultsLayout { display: flex; flex-direction: column; gap: 18px; }
+  body[data-page=results] #resultsLayout #mapBox {
+    order: -1; position: relative; top: 0; width: 100%; max-height: none; overflow: hidden;
+  }
+  body[data-page=results] .results-flow { width: 100%; }
+  body[data-page=results] #map { height: clamp(300px,44svh,390px); }
+  body[data-page=results] #resultsLayout #list { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 740px) {
+  .main-nav { gap: clamp(12px,4vw,28px); }
+  .main-nav a { min-height: 40px; }
+  .main-nav a[aria-current]::after { bottom: 2px; }
+  .journey-progress { margin-top: 24px; gap: 10px; }
+  .journey-progress li { font-size: 11px; }
+  .journey-layout { grid-template-columns: minmax(0,1fr); margin-top: 18px; gap: 14px; }
+  .journey-layout .hero { min-height: 0; height: 104px; border-radius: 13px; }
+  .journey-layout .hero-copy { padding: 16px 19px; }
+  .journey-layout .hero h2 { font-size: 25px; margin-top: 6px; }
+  .journey-layout .hero h2 br, .journey-layout .hero-sub, .journey-layout .slide-caption { display: none; }
+  .journey-layout .hero-kicker { font-size: 11px; }
+  .journey-layout .slide-control { left: auto; right: 14px; bottom: 14px; gap: 6px; }
+  .journey-layout .slide-dots button { width: 13px; }
+  .journey-layout .slide-dots button[aria-pressed=true] { width: 24px; }
+  body[data-page] #searchZone.guide-shell, #maskQ { padding: 24px 20px; border-radius: 13px; }
+  #guideTitle, #habitTitle { font-size: 28px; }
+  .guide-fields { margin-top: 24px; gap: 20px; }
+  .guide-actions { margin-top: 24px; }
+  .guide-shell .mode { padding-inline: 10px; }
+  #maskQ .q-grid { gap: 21px; }
+  #maskQ .q-h { display: block; margin: 3px 0 0; }
+  #maskQ .mbti-choices { grid-template-columns: 1fr; gap: 8px; }
+  #maskQ .prefs-layout { margin-top: 24px; }
+  .guide-shell .two-fields { gap: 10px; }
+}
+@media (max-width: 500px) {
+  body[data-page=results] #resultsLayout #list { grid-template-columns: 1fr; }
+  .result-toolbar .tabs { margin-bottom: 12px; }
+}
+
+::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+::view-transition-group(nest-page) { animation-duration: 430ms; perspective: 1400px; }
+::view-transition-old(nest-page), ::view-transition-new(nest-page) {
+  backface-visibility: hidden; transform-origin: 50% 35%;
+  animation-duration: 430ms; animation-timing-function: cubic-bezier(.22,.72,.2,1);
+  animation-fill-mode: both; mix-blend-mode: normal;
+}
+::view-transition-old(nest-page) { animation-name: page-turn-out; }
+::view-transition-new(nest-page) { animation-name: page-turn-in; }
+@keyframes page-turn-out {
+  to { opacity: 0; transform: perspective(1400px) translateX(-7%) translateZ(-80px) rotateY(-13deg); }
+}
+@keyframes page-turn-in {
+  from { opacity: 0; transform: perspective(1400px) translateX(7%) translateZ(-80px) rotateY(13deg); }
+  to { opacity: 1; transform: perspective(1400px) translateX(0) translateZ(0) rotateY(0); }
+}
+html[data-direction=back]::view-transition-old(nest-page) { animation-name: page-back-out; }
+html[data-direction=back]::view-transition-new(nest-page) { animation-name: page-back-in; }
+@keyframes page-back-out {
+  to { opacity: 0; transform: perspective(1400px) translateX(7%) translateZ(-80px) rotateY(13deg); }
+}
+@keyframes page-back-in {
+  from { opacity: 0; transform: perspective(1400px) translateX(-7%) translateZ(-80px) rotateY(-13deg); }
+}
+@media (max-width: 740px) {
+  .topbar-inner { min-height: 60px; }
+  .main-nav { gap: 22px; }
+  .main-nav a { font-size: 12px; min-height: 36px; }
+  .main-nav a[aria-current]::after { bottom: 1px; }
+  .journey-progress { margin-top: 28px; gap: 9px; }
+  .journey-progress li { font-size: 11px; }
+  body[data-page] #searchZone.guide-shell, #maskQ { margin-top: 34px; margin-bottom: 44px; }
+  #guideTitle, #habitTitle { font-size: 30px; }
+  .guide-fields { margin-top: 28px; gap: 22px; }
+  .guide-actions { margin-top: 28px; }
+  #maskQ .q-grid { gap: 23px; }
+  #maskQ .seg button { padding: 9px 10px; }
+  #maskQ .mbti-choices { grid-template-columns: 1fr; gap: 8px; }
+  #maskQ .mbti-row .seg button { padding-block: 9px; }
+  #maskQ .prefs-layout { margin-top: 26px; }
+  #maskQ .q-h { display: block; margin-left: 0; margin-top: 2px; }
+  .page-footer .footer-sign span { max-width: 260px; line-height: 1.8; }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+  #maskQ .seg button { transition: none; }
+}

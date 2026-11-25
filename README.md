@@ -22,7 +22,18 @@ python3 -m venv .venv
 
 管理房源时，先运行 `.venv/bin/python manage.py createsuperuser`，再登录 [管理后台](http://127.0.0.1:8000/admin/)。
 
-双击 `index.html` 可用内置数据离线演示，第一版保存在 `第一版（原始）index.html`。登录、共享收藏和偏好保存请通过 Django 打开的页面使用。
+在完整仓库目录中双击 `index.html` 或 `长虹居·地图加载修复版.html`，可用随仓库附带的演示数据。登录、共享收藏和偏好保存请通过 Django 打开的页面使用。第一版保存在 `第一版（原始）index.html`，该版本的 Leaflet 地图仍通过 CDN 加载。
+
+## 前端文件结构
+
+根目录的 HTML 保留各版本页面入口。前端文件统一放在 `housing/static/housing/frontend/`。
+
+- `pages/` 存放各版本的 JavaScript。
+- `styles/` 存放 CSS，`images/` 存放共用照片和室友头像。
+- `data/` 存放各版本的模拟房源、地点索引、地铁站和压缩底图。文件使用 `.data.js` 封装，双击 HTML 时浏览器可以直接加载。Django 的导入命令使用根目录的 CSV。
+- `vendor/` 存放底图解压库，底图版权归 OpenStreetMap contributors 所有，采用 ODbL 1.0 许可。
+
+复制或部署静态演示时，同时保留根目录 HTML 和上述前端目录的相对位置。
 
 ## 团队共享数据库
 

@@ -4,13 +4,13 @@ const path = require('node:path');
 const vm = require('node:vm');
 
 const root = path.resolve(__dirname, '..');
-const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+const script = fs.readFileSync(path.join(root, 'housing', 'static', 'housing', 'frontend', 'pages', 'main.js'), 'utf8');
 function sourceBetween(start, end) {
-  const offset = html.indexOf(start);
+  const offset = script.indexOf(start);
   assert.ok(offset >= 0, 'Missing source section ' + start);
-  const finish = html.indexOf(end, offset);
+  const finish = script.indexOf(end, offset);
   assert.ok(finish > offset, 'Missing source boundary ' + end);
-  return html.slice(offset, finish);
+  return script.slice(offset, finish);
 }
 
 // Exercise the planner and the renderer used by the standalone and Django pages.

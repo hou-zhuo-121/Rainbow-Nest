@@ -1,0 +1,63 @@
+#detailPanels{grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);gap:14px;align-items:stretch}
+#detailPanels .detail-column,#detailPanels .detail-wide{display:contents}
+#detailPanels>#dtSource,#detailPanels>#dtAgreement{align-self:start}
+#detailPanels .detail-section{order:0;scroll-margin-top:18px}
+.room-panel-title i,.detail-section summary i{display:grid;place-items:center;width:29px;height:29px;border-radius:8px;background:#edf3ed;color:#4a6858;align-self:center}
+.room-panel-title .icon,.detail-section summary .icon{width:16px;height:16px}
+.room-panel-title{align-items:center}
+.room-panel-title h2{font-size:17px}
+.room-jumps{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin:20px 0 11px}
+.room-jumps button{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;background:var(--card);border:1px solid var(--line);border-radius:8px;font-weight:600;font-size:13px;color:var(--text)}
+.room-jumps button:hover,.room-jumps button:focus-visible{color:var(--primary-dark);background:var(--primary-soft);border-color:#cfa892}
+.room-jumps svg{width:16px;height:16px;color:#5c7668}
+.room-specs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:0 0 13px}
+.room-specs>div{min-width:0;background:#f4f5ef;border:1px solid #ebede3;padding:8px 9px;border-radius:8px}
+.room-specs dt{color:var(--sub);font-size:12px}
+.room-specs dd{font-size:17px;font-weight:720;margin:2px 0 0;line-height:1.4}
+#dtInfo .info-address{display:flex;flex-wrap:wrap;gap:4px 8px;color:var(--sub);font-size:13px}
+#dtInfo .info-address .location-link{margin-top:0}
+.lease-window{--window:#517361;display:grid;gap:8px}
+.lease-window .lease-dates{display:flex;align-items:end;justify-content:space-between;gap:9px;font-size:14px;font-weight:650}
+.lease-window .lease-dates small{display:block;font-size:11px;color:var(--sub);font-weight:500}
+.lease-window .lease-dates span:last-child{text-align:right}
+.lease-track{height:7px;border-radius:7px;background:#edf1e9;position:relative;overflow:hidden}
+.lease-track b{height:100%;position:absolute;left:var(--lease-left);width:var(--lease-width);background:#789988;border-radius:7px}
+.lease-caption{color:var(--sub);font-size:12px}
+.lease-stat{display:flex;flex-wrap:wrap;align-items:baseline;gap:7px 13px;border-top:1px solid var(--line);padding:10px 0 0;margin-top:12px;font-size:13px}
+.lease-stat strong{font-size:18px;color:var(--primary-dark)}
+.lease-chip{background:#eaf1e8;color:#365d46;border-radius:5px;font-size:11px;font-weight:650;padding:2px 6px;margin-left:auto}
+.lease-chip.short{background:#f9ecdf;color:var(--primary-dark)}
+.room-ride-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:0 0 10px}
+.room-ride-grid>div{background:#f4f5ef;border:1px solid #ebede3;border-radius:8px;padding:7px 8px}
+.room-ride-grid dt{font-size:12px;color:var(--sub)}
+.room-ride-grid dd{font-size:16px;font-weight:720;margin:2px 0 0}
+.room-ride-grid small{font-weight:400;font-size:11px}
+.room-commute-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.room-commute-actions .quiet-button{padding:6px 10px;font-size:12px}
+.room-commute-actions details{min-width:0;flex:1 1 100%}
+.room-commute-actions details summary{width:max-content;cursor:pointer;color:var(--primary-dark);font-size:12px;margin:2px 0}
+#dtCommute .detail-section-hint{margin-left:auto}
+#dtCommuteHint:empty{display:none}
+#detailPanels .room-tool{align-self:start}
+.room-tool summary .detail-section-hint{font-size:12px}
+#detailPanels .room-tool>summary::after{font-size:15px}
+.room-data-link{font-size:13px;color:var(--primary-dark);text-decoration:underline;text-underline-offset:3px}
+#discover .live-rental-links{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;margin:12px 0 18px;font-size:13px;color:var(--sub)}
+#discover .live-rental-links a,.location-source a{color:var(--primary-dark);text-decoration:underline;text-underline-offset:3px}
+.location-source{margin-top:8px;font-size:12px;color:var(--sub)}
+.sug-item .sg-name{min-width:0;flex:1;overflow-wrap:anywhere}
+.sug-item .sg-meta{margin-left:0;max-width:39%;overflow:hidden;text-overflow:ellipsis}
+.sug-item[aria-selected=true]{background:var(--primary-soft)}
+@media(max-width:800px){#detailPanels{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:460px){.room-jumps{gap:5px}.room-jumps button{padding:6px 8px}.room-specs dd{font-size:15px}.room-ride-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media print{.room-jumps{display:none}}
+#detailPanels>#dtSource{grid-column:1/-1}
+#detailPanels>#dtCommute:has(+ #dtMatchSec[hidden]){grid-column:1/-1}
+#dtScoreOverview{display:grid;gap:6px}
+#dtScoreOverview strong{color:#315d4a;font-size:22px;font-variant-numeric:tabular-nums;line-height:1.15}
+#dtScoreOverview meter{width:100%;height:10px;accent-color:#678f77}
+#dtScoreOverview meter::-webkit-meter-optimum-value{background:#678f77}
+#dtScoreOverview p,.score-breakdown>summary{font-size:12px;color:var(--sub)}
+.score-breakdown>summary{width:max-content;cursor:pointer;color:var(--primary-dark);margin:0 18px 14px}
+.match-caption{margin-left:auto}
+@media(max-width:460px){.score-breakdown>summary{margin-left:13px}}

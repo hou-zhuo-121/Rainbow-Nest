@@ -4,19 +4,24 @@ const path = require('node:path');
 const vm = require('node:vm');
 const zlib = require('node:zlib');
 
-const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+const frontend = path.join(__dirname, '..', 'housing', 'static', 'housing', 'frontend');
+const script = fs.readFileSync(path.join(frontend, 'pages', 'main.js'), 'utf8');
 function sourceBetween(start, end) {
-  const offset = html.indexOf(start);
+  const offset = script.indexOf(start);
   assert.ok(offset >= 0, 'Missing source section ' + start);
-  const finish = html.indexOf(end, offset);
+  const finish = script.indexOf(end, offset);
   assert.ok(finish > offset, 'Missing source boundary ' + end);
-  return html.slice(offset, finish);
+  return script.slice(offset, finish);
 }
 
-const [, encoded] = html.match(/const bytes=Uint8Array\.from\(atob\("([A-Za-z0-9+/=]+)"\)/);
-const data = JSON.parse(zlib.inflateSync(Buffer.from(encoded, 'base64')));
-const window = {NEST_CITY_DATA: data};
+const carrier = fs.readFileSync(path.join(frontend, 'data', 'beijing-core-map.data.js'), 'utf8');
+const window = {};
 const context = vm.createContext({window});
+vm.runInContext(carrier, context);
+assert.equal(typeof window.NEST_CITY_DATA_BASE64, 'string');
+window.NEST_CITY_DATA = JSON.parse(
+  zlib.inflateSync(Buffer.from(window.NEST_CITY_DATA_BASE64, 'base64'))
+);
 vm.runInContext(
   sourceBetween('  const metersY=111195, metersX=', '  window.getNestStreetRoute=route;') +
   'window.getNestStreetRoute=route;',

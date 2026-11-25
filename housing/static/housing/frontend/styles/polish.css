@@ -1,0 +1,224 @@
+/* Shared screen surfaces and type for the guided search, results and detail pages. */
+:root {
+  --bg: #f7f3eb;
+  --card: #fffdf9;
+  --primary: #9d412c;
+  --primary-dark: #76301f;
+  --primary-soft: #f6e7dc;
+  --text: #2c2924;
+  --sub: #615c52;
+  --line: #e5dacb;
+  --r: 18px;
+  --shadow: 0 1px 2px rgb(64 44 28 / 4%), 0 8px 24px rgb(64 44 28 / 6%);
+  --surface-muted: #f2ece2;
+  --housing-green: #3d5d4f;
+}
+body {
+  background: radial-gradient(ellipse at 14% 0%, #f2e7d7 0%, transparent 700px),
+    radial-gradient(ellipse at 94% 14%, #f8f5ee 0%, transparent 580px), var(--bg);
+  background-repeat: no-repeat;
+}
+.topbar {
+  background: #fffcf6;
+  border-bottom: 1px solid var(--line);
+}
+.wordmark { color: #302820; }
+.brand-symbol {
+  background: linear-gradient(145deg, #ad593d, var(--primary-dark));
+  box-shadow: inset 0 1px 0 #ffffff38, 0 3px 8px #8d45273a;
+}
+.wordmark .latin { color: #776552; }
+.main-nav a:hover, .main-nav a[aria-current="page"] { color: var(--primary-dark); }
+.main-nav a[aria-current="page"]::after { background: var(--primary); }
+.nav-right .saved-link:hover { color: var(--primary-dark); }
+
+.journey-progress { max-width: 1120px; }
+.journey-progress li { border-color: #dfd2c1; }
+.journey-progress li[aria-current] { color: var(--primary-dark); }
+.journey-progress li.complete { color: var(--housing-green); border-color: #8caa96; }
+.journey-layout {
+  max-width: 1120px;
+  gap: clamp(16px, 2.1vw, 30px);
+}
+.journey-layout .hero {
+  border-radius: 22px;
+  box-shadow: 0 14px 32px rgb(58 38 24 / 17%);
+}
+.journey-layout .hero::after {
+  background: linear-gradient(90deg, #261a13db 0%, #2c2117a6 38%, #291c1224 100%),
+    linear-gradient(0deg, #21160fbf, transparent 50%);
+}
+.journey-layout .hero-copy { padding-inline: clamp(26px, 3vw, 42px); }
+.journey-layout .hero h2 {
+  font-size: clamp(34px, 3.6vw, 49px);
+  line-height: 1.17;
+  font-weight: 730;
+  text-shadow: 0 1px 12px #21160f69;
+}
+.journey-layout .hero-kicker { color: #f9e5cd; }
+.journey-layout .hero-sub { color: #fff4e4; }
+.journey-layout .accent-period { color: #ffc399; }
+.journey-layout .slide-caption { color: #fff2dd; }
+body[data-page] #searchZone.guide-shell, #maskQ {
+  border-radius: 22px;
+  border-color: #e4d7c8;
+  background: radial-gradient(ellipse at top right, #f7ebdc 0%, transparent 275px), var(--card);
+  box-shadow: var(--shadow);
+}
+#guideTitle, #habitTitle, #resultsTitle, #dtTitle, #leadTitle {
+  font-weight: 770;
+  letter-spacing: -.045em;
+}
+#guideTitle, #habitTitle { font-size: clamp(30px, 3.22vw, 42px); }
+#guideIntro, #habitIntro { color: var(--sub); }
+.step-caption {
+  width: fit-content;
+  padding: 4px 9px;
+  border: 1px solid #e9cfc0;
+  border-radius: 999px;
+  background: #fbefe6;
+  color: var(--primary-dark);
+  font-weight: 680;
+  font-variant-numeric: tabular-nums;
+}
+.guide-shell .mode-row, .tabs {
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: var(--surface-muted);
+}
+.guide-shell .mode, .tab { border-radius: 9px; }
+.guide-shell .mode.on, .tab.on {
+  border-color: #dab7a2;
+  background: #fffaf4;
+  color: var(--primary-dark);
+  box-shadow: 0 2px 6px #67412213;
+}
+.guide-shell .suggest input, .guide-shell .field input, .guide-shell .field select {
+  border-color: #d8c8b6;
+  border-radius: 12px;
+  background: #fffefa;
+}
+.guide-shell .suggest input::placeholder { color: #726b5e; }
+.sug-list {
+  border-radius: 12px;
+  background: var(--card);
+  box-shadow: 0 12px 26px rgb(64 44 28 / 16%);
+}
+.guide-shell .sug-list .sel, .guide-shell .sug-list .sug-item:hover { background: var(--primary-soft); }
+.guide-shell .locked-loc {
+  border-radius: 0 8px 8px 0;
+  background: #f9f2e8;
+}
+.guide-shell .chip, #maskQ .seg button {
+  border-radius: 10px;
+  border-color: #d9cbb9;
+  background: #fffdf8;
+}
+.guide-shell .chip.on, #maskQ .seg button.on {
+  background: var(--primary-soft);
+  border-color: #bd8268;
+  color: var(--primary-dark);
+}
+#maskQ .q-item {
+  padding: 14px;
+  border: 1px solid #ebdfd1;
+  border-radius: 14px;
+  background: #fbf7ef;
+}
+#maskQ .q-h { color: var(--sub); }
+.guide-actions #guideNext, .guide-actions #btnSearch, #maskQ .actions .btn-p {
+  border-radius: 12px;
+  border-color: var(--primary);
+  background: linear-gradient(145deg, #a95136, #873622);
+  box-shadow: 0 3px 9px #8a3a2630;
+}
+.guide-actions #guideNext:not(:disabled):hover, .guide-actions #btnSearch:not(:disabled):hover,
+#maskQ .actions .btn-p:not(:disabled):hover {
+  background: var(--primary-dark);
+}
+.quiet-button, .nav-right #btnAccount {
+  border-color: #dfd1be;
+  border-radius: 11px;
+  background: var(--card);
+}
+.quiet-button:hover, .nav-right #btnAccount:hover { background: #fbf2e8; }
+
+/* Keep the property list, map and room details in the same warm palette. */
+body[data-page=results] #resultsTitle { font-size: clamp(27px, 2.9vw, 38px); }
+#results > .section-heading {
+  padding: 0 0 15px;
+  border-bottom: 1px solid var(--line);
+}
+#results .summary { color: var(--sub); line-height: 1.65; }
+#results .q-state { color: var(--primary-dark); }
+#results .text-btn { color: var(--primary-dark); }
+.home-card {
+  border-radius: 17px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+.home-card:hover, .home-card:focus-within {
+  border-color: #c9ac93;
+  box-shadow: 0 9px 24px rgb(64 44 28 / 11%);
+}
+.house-body { padding: 15px 16px 14px; }
+.house-body h3 { color: #302820; letter-spacing: -.025em; }
+.house-meta, .area-label, .match-note { color: var(--sub); }
+.house-price {
+  color: var(--primary-dark);
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+}
+.house-price small { color: var(--sub); }
+.home-card button.house-channel {
+  border-radius: 8px;
+  border-color: #e4cfbd;
+  background: #faf0e5;
+  color: var(--primary-dark);
+}
+.feat-chip, .room-score {
+  background: #edf2ea;
+  border-color: #dbe6d9;
+  color: var(--housing-green);
+}
+.map-panel, .cost-panel, .modal { background: var(--card); box-shadow: var(--shadow); }
+.map-heading {
+  background: #fbf6ed;
+  border-bottom: 1px solid var(--line);
+}
+.map-heading h3, .cost-panel h2 { color: #2d493d; }
+.map-note { background: #fbf6ed; color: var(--sub); }
+.trip-sheet {
+  background: var(--card);
+  border-color: var(--line);
+}
+.trip-actions .trip-action {
+  background: #f0f3ec;
+  border-color: #ccd9cf;
+  color: #315344;
+}
+.trip-actions .trip-action:hover { background: #e7efe6; }
+
+.detail-title { padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.detail-meta, .detail-section-hint { color: var(--sub); }
+.cost-panel, #detailPanels .detail-section { border-color: var(--line); }
+.detail-section > summary { color: #3b342a; }
+#detailPanels .detail-section[open] > summary { color: var(--primary-dark); }
+.detail-metrics dd, .room-fee-summary strong { font-variant-numeric: tabular-nums; }
+.page-footer .footer-sign { color: var(--sub); }
+.page-footer .footer-sign b { color: #46392d; }
+
+@media (min-width: 741px) {
+  .journey-layout { grid-template-columns: minmax(260px, .87fr) minmax(0, 1.13fr); }
+}
+@media (max-width: 740px) {
+  .journey-progress { margin-top: 23px; }
+  .journey-layout .hero { height: 128px; border-radius: 17px; }
+  .journey-layout .hero-copy { padding: 16px 19px; }
+  .journey-layout .hero h2 { font-size: clamp(21px, 6vw, 28px); }
+  body[data-page] #searchZone.guide-shell, #maskQ {
+    margin-top: 0;
+    border-radius: 17px;
+  }
+  #maskQ .q-item { padding: 12px; }
+}

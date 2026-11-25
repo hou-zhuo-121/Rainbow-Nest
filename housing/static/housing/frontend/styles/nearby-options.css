@@ -1,0 +1,6 @@
+.nearby-options{margin-top:18px;border-top:1px solid #ded9cd;padding-top:14px}
+.nearby-options>h3{margin:0 0 4px;font-size:17px}
+.nearby-options>p,.nearby-why{color:var(--sub);font-size:13px;margin:0 0 8px}
+.nearby-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,245px),1fr));gap:12px}
+.nearby-card{min-width:0}
+.nearby-why{margin:7px 2px 0}

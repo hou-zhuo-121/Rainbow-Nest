@@ -1,0 +1,3 @@
+# Offline data is loaded as JavaScript to support opening the demos from disk.
+housing/static/housing/frontend/data/*.data.js -linguist-detectable
+housing/static/housing/frontend/vendor/* linguist-vendored
